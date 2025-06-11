@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workout Plan</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="magical-bg" id="magicalBg"></div>
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="header">
+      <h1 class="page-title">Workout Plan</h1>
+      <p class="subtitle">Transform into your strongest, most magical self</p>
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-number" id="totalExercises">8</span>
+          <span>Exercises</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="totalTime">45</span>
+          <span>Minutes</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="completedToday">0</span>
+          <span>Completed</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="streakDays">1</span>
+          <span>Day Streak</span>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="container">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">
+          ✨ All Exercises
+        </button>
+        <button class="filter-tab" data-filter="cardio">💗 Cardio</button>
+        <button class="filter-tab" data-filter="strength">💪 Strength</button>
+        <button class="filter-tab" data-filter="flexibility">
+          🧘‍♀️ Flexibility
+        </button>
+        <button class="filter-tab" data-filter="novice">🌟 Beginner</button>
+      </div>
+
+      <div class="exercise-grid" id="exerciseGrid">
+      </div>
+    </div>
+
+    <div class="timer-widget" id="timerWidget">
+      <div class="timer-display" id="timerDisplay">00:00</div>
+      <div class="timer-controls">
+        <button class="timer-btn" onclick="startTimer()">▶️</button>
+        <button class="timer-btn" onclick="pauseTimer()">⏸️</button>
+        <button class="timer-btn" onclick="resetTimer()">🔄</button>
+      </div>
+    </div>
+
+    <div class="video-popup" id="videoPopup">
+      <div class="video-content">
+        <div class="popup-header">
+          <h3 id="videoTitle">Exercise Video</h3>
+          <button class="close-btn" onclick="closeVideo()">&times;</button>
+        </div>
+        <iframe id="videoFrame" class="video-frame" allowfullscreen></iframe>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,547 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 10, 2025 at 05:51 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `fitness_app`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `role` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `password`, `email`, `created_at`, `role`) VALUES
+(1, 'memo', '123456', 'memo@gmail.com', '2025-04-14 13:08:55', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `coach_id` int(11) NOT NULL,
+  `status` enum('booked','cancelled') DEFAULT 'booked',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `user_id`, `coach_id`, `status`, `created_at`) VALUES
+(1, 3, 1, 'booked', '2025-04-19 17:18:50'),
+(4, 6, 2, 'booked', '2025-06-10 14:25:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `foods`
+--
+
+CREATE TABLE `foods` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `protein` float DEFAULT NULL,
+  `carbohydrates` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fiber` float DEFAULT NULL,
+  `calories` float DEFAULT NULL,
+  `quantity` varchar(50) DEFAULT NULL,
+  `suitable_for_diabetes` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `foods`
+--
+
+INSERT INTO `foods` (`id`, `name`, `protein`, `carbohydrates`, `fats`, `fiber`, `calories`, `quantity`, `suitable_for_diabetes`) VALUES
+(266, 'Ful Medames (Cooked)', 8, 18, 0.7, 7, 110, '100', 1),
+(267, 'Ta\'ameya / Falafel (Fried)', 13, 25, 15, 5, 280, '100', 0),
+(268, 'Koshary (Prepared Dish)', 6, 30, 7, 5, 210, '100', 0),
+(269, 'Molokhia (Cooked)', 2, 4, 1, 3, 35, '100', 1),
+(270, 'Mahshi Cabbage (Cooked)', 3, 20, 5, 3, 140, '100', 0),
+(271, 'Hawawshi (Meat in Bread)', 15, 20, 20, 2, 320, '100', 0),
+(272, 'Aish Baladi (Whole Wheat)', 9, 45, 2, 5, 240, '100', 1),
+(273, 'Besarah (Cooked)', 8, 15, 4, 6, 120, '100', 1),
+(274, 'Bamya (Okra, Cooked)', 2, 7, 0.5, 3, 33, '100', 1),
+(275, 'Roz Bel Laban (Rice Pudding, Prepared)', 4, 25, 5, 0.5, 160, '100', 0),
+(276, 'Basbousa (Dessert)', 5, 55, 15, 1, 370, '100', 0),
+(277, 'Konafa (Dessert)', 6, 60, 20, 2, 450, '100', 0),
+(278, 'Fattah (Meat, Rice, Bread)', 12, 35, 15, 3, 330, '100', 0),
+(279, 'Alexandrian Liver (Cooked)', 20, 5, 10, 1, 180, '100', 1),
+(280, 'Macarona Bechamel (Cooked)', 9, 25, 12, 2, 250, '100', 0),
+(281, 'Chicken Breast (Cooked, Skinless)', 31, 0, 3.6, 0, 165, '100', 1),
+(282, 'Salmon (Cooked)', 20, 0, 13, 0, 208, '100', 1),
+(283, 'Eggs (Large, 1 egg)', 6, 0.6, 5, 0, 78, '50', 1),
+(284, 'Tuna (Canned in Water, Drained)', 25.5, 0, 0.8, 0, 116, '100', 1),
+(285, 'Ground Beef (Lean, Cooked)', 26, 0, 15, 0, 250, '100', 1),
+(286, 'Pork Tenderloin (Cooked)', 26, 0, 5, 0, 143, '100', 1),
+(287, 'Turkey Breast (Cooked, Skinless)', 30, 0, 3.5, 0, 157, '100', 1),
+(288, 'Cod (Cooked)', 18, 0, 0.7, 0, 82, '100', 1),
+(289, 'Shrimp (Cooked)', 24, 0, 0.3, 0, 99, '100', 1),
+(290, 'Tuna (Fresh, Cooked)', 23, 0, 5, 0, 184, '100', 1),
+(291, 'Beef Steak (Lean, Cooked)', 29, 0, 10, 0, 217, '100', 1),
+(292, 'Lamb (Lean, Cooked)', 25, 0, 12, 0, 210, '100', 1),
+(293, 'Bacon (Cooked)', 37, 0, 42, 0, 542, '100', 1),
+(294, 'Sausage (Pork, Cooked)', 18, 1, 30, 0, 350, '100', 0),
+(295, 'Hot Dog', 12, 3, 28, 0, 300, '100', 0),
+(296, 'Spinach (Raw)', 2.9, 3.6, 0.4, 2.2, 23, '100', 1),
+(297, 'Broccoli (Raw)', 2.8, 6.6, 0.4, 2.6, 34, '100', 1),
+(298, 'Avocado', 2, 9, 15, 7, 160, '100', 1),
+(299, 'Sweet Potato (Baked, Skin On)', 1.6, 20.1, 0.1, 3, 86, '100', 1),
+(300, 'White Potato (Baked, Skin On)', 2, 17, 0.1, 2.2, 77, '100', 1),
+(301, 'Apple (With Skin)', 0.3, 14, 0.2, 2.4, 52, '100', 1),
+(302, 'Banana', 1.1, 23, 0.3, 2.6, 89, '100', 0),
+(303, 'Berries (Mixed, e.g., Blueberries)', 0.7, 14, 0.3, 2.4, 57, '100', 1),
+(304, 'Orange', 0.9, 12, 0.1, 2.4, 47, '100', 1),
+(305, 'Tomato', 0.9, 3.9, 0.2, 1.2, 18, '100', 1),
+(306, 'Cucumber', 0.7, 3.6, 0.1, 1.5, 15, '100', 1),
+(307, 'Carrots', 0.9, 9.6, 0.2, 2.8, 41, '100', 1),
+(308, 'Bell Peppers (Red)', 1, 6, 0.3, 2.1, 31, '100', 1),
+(309, 'Zucchini', 1.2, 3.1, 0.3, 1, 17, '100', 1),
+(310, 'Spinach (Cooked)', 2.9, 3.6, 0.4, 2.2, 23, '100', 1),
+(311, 'Kale (Raw)', 4.3, 8.8, 0.9, 3.6, 49, '100', 1),
+(312, 'Brussels Sprouts (Cooked)', 3.4, 9, 0.3, 3.8, 43, '100', 1),
+(313, 'Asparagus (Cooked)', 2.2, 3.9, 0.2, 2.1, 20, '100', 1),
+(314, 'Cabbage (Raw)', 1.3, 5.8, 0.1, 2.5, 25, '100', 1),
+(315, 'Lettuce (Romaine)', 1.2, 3.3, 0.3, 2.1, 17, '100', 1),
+(316, 'Green Peas (Cooked)', 5, 14, 0.4, 5, 81, '100', 1),
+(317, 'Corn (Cooked)', 3.3, 24, 1.2, 2.7, 106, '100', 0),
+(318, 'Green Beans', 1.8, 7, 0.2, 3.4, 31, '100', 1),
+(319, 'Cauliflower', 1.9, 5, 0.3, 2, 25, '100', 1),
+(320, 'Button Mushrooms', 3.1, 3.3, 0.3, 1, 22, '100', 1),
+(321, 'Canned Diced Tomatoes', 1, 4, 0.1, 1, 20, '100', 1),
+(322, 'Garlic (Raw)', 6, 33, 0.5, 2, 149, '100', 1),
+(323, 'Onion (Raw)', 1.1, 9, 0.1, 1.7, 40, '100', 1),
+(324, 'Ginger (Raw)', 1.8, 18, 0.8, 2, 80, '100', 1),
+(325, 'Lentils (Cooked)', 9, 20, 0.4, 8, 116, '100', 1),
+(326, 'Chickpeas (Cooked)', 9, 27, 2.6, 7.6, 164, '100', 1),
+(327, 'Brown Rice (Cooked)', 2.7, 25.6, 0.9, 1.8, 112, '100', 1),
+(328, 'Oats (Rolled, Dry)', 13, 66, 6, 10, 389, '100', 1),
+(329, 'Quinoa (Cooked)', 4.4, 21.3, 1.9, 2.8, 120, '100', 1),
+(330, 'Almonds', 21, 22, 49, 12, 579, '100', 1),
+(331, 'Walnuts', 15, 14, 65, 7, 654, '100', 1),
+(332, 'Greek Yogurt (Plain, Non-Fat)', 10, 3.6, 0.4, 0, 59, '100', 1),
+(333, 'Cow Milk (2% Fat)', 3.3, 4.8, 2, 0, 50, '100', 1),
+(334, 'Cottage Cheese (Low-Fat)', 11, 3.4, 1, 0, 72, '100', 1),
+(335, 'Olive Oil', 0, 0, 100, 0, 884, '100', 1),
+(336, 'Black Beans (Cooked)', 8.9, 23.7, 0.5, 8.7, 132, '100', 1),
+(337, 'Whole Wheat Bread', 13, 41, 4, 7, 260, '100', 1),
+(338, 'White Bread', 9, 49, 3, 2, 265, '100', 0),
+(339, 'Whole Wheat Pasta (Cooked)', 5, 30, 1, 4, 150, '100', 1),
+(340, 'White Pasta (Cooked)', 5, 31, 1, 2, 158, '100', 0),
+(341, 'Peanut Butter (Natural, No Sugar Added)', 25, 20, 50, 8, 588, '100', 1),
+(342, 'Honey', 0.3, 82, 0, 0, 304, '100', 0),
+(343, 'Sugar (Granulated)', 0, 100, 0, 0, 400, '100', 0),
+(344, 'Cheddar Cheese', 25, 1.3, 33, 0, 404, '100', 1),
+(345, 'Popcorn (Air-Popped, Plain)', 13, 78, 4, 15, 387, '100', 1),
+(346, 'Kidney Beans (Cooked)', 9, 23, 0.5, 7, 127, '100', 1),
+(347, 'Pearled Barley (Cooked)', 3.5, 28, 0.5, 4, 123, '100', 1),
+(348, 'Pistachios (Shelled)', 20, 28, 45, 10, 560, '100', 1),
+(349, 'Chia Seeds', 17, 42, 31, 34, 486, '100', 1),
+(350, 'Mozzarella Cheese (Part-Skim)', 28, 2, 16, 0, 280, '100', 1),
+(351, 'Ricotta Cheese (Part-Skim)', 11, 5, 8, 0, 138, '100', 1),
+(352, 'Feta Cheese', 14, 4, 17, 0, 264, '100', 1),
+(353, 'White Rice (Cooked)', 2.7, 28, 0.3, 0.4, 130, '100', 0),
+(354, 'Pita Bread (White)', 9, 57, 1, 3, 275, '100', 0),
+(355, 'Croissant', 7, 45, 25, 2, 406, '100', 0),
+(356, 'Glazed Doughnut', 4, 50, 20, 1, 450, '100', 0),
+(357, 'French Fries', 3.4, 41, 15, 3, 312, '100', 0),
+(358, 'Potato Chips', 6, 53, 35, 4, 536, '100', 0),
+(359, 'Candy Bar (Milk Chocolate with Nuts)', 8, 55, 30, 3, 530, '100', 0),
+(360, 'Soda (Cola)', 0, 10, 0, 0, 40, '100', 0),
+(361, 'Apple Fruit Juice (100%)', 0.1, 11, 0.1, 0.2, 46, '100', 0),
+(362, 'Maple Syrup', 0, 67, 0, 0, 260, '100', 0),
+(363, 'Jelly/Jam (Fruit Spread)', 0.5, 60, 0, 1, 240, '100', 0),
+(364, 'Vanilla Ice Cream', 4, 24, 13, 0, 207, '100', 0),
+(365, 'Chocolate Cake (Frosted)', 4, 60, 20, 2, 420, '100', 0),
+(366, 'Chocolate Chip Cookies', 5, 65, 25, 3, 500, '100', 0),
+(367, 'Cheese Pizza (Frozen)', 11, 26, 10, 2, 240, '100', 0),
+(368, 'Sweetened Corn Flakes Cereal', 7, 85, 1, 3, 380, '100', 0),
+(369, 'Salted Pretzels', 10, 75, 4, 3, 380, '100', 0),
+(370, 'Plain White Bagel', 10, 56, 1.5, 2, 275, '100', 0),
+(371, 'Pancake (Mix, Prepared)', 4, 30, 5, 1, 190, '100', 0),
+(372, 'Waffle (Mix, Prepared)', 4, 28, 6, 1, 200, '100', 0),
+(373, 'Blueberry Muffin', 6, 45, 15, 2, 350, '100', 0),
+(374, 'White Rice Noodles (Cooked)', 2, 25, 0.5, 1, 110, '100', 0),
+(375, 'Corn Tortilla', 2, 22, 1, 3, 110, '100', 1),
+(376, 'White Flour Tortilla', 7, 45, 8, 2, 280, '100', 0),
+(377, 'Hummus', 7, 18, 10, 6, 166, '100', 1),
+(378, 'Tahini', 25, 21, 54, 9, 595, '100', 1),
+(379, 'Feta Cheese (Low Fat)', 18, 3, 12, 0, 190, '100', 1),
+(380, 'Ketchup', 1, 25, 0.1, 0.5, 100, '100', 0),
+(381, 'Mayonnaise (Regular)', 0.8, 1, 79, 0, 718, '100', 1),
+(382, 'Yellow Mustard', 4, 4, 3, 2, 66, '100', 1),
+(383, 'Soy Sauce', 10, 6, 0, 0, 60, '100', 1),
+(384, 'Balsamic Vinegar', 0.5, 17, 0, 0, 88, '100', 1),
+(385, 'Cinnamon', 4, 80, 1, 53, 247, '100', 1),
+(386, 'Black Pepper', 11, 65, 3, 25, 251, '100', 1),
+(387, 'Salt', 0, 0, 0, 0, 0, '100', 1),
+(388, 'Water', 0, 0, 0, 0, 0, '100', 1),
+(389, 'Black Coffee', 0.1, 0, 0.1, 0, 1, '100', 1),
+(390, 'Black Tea (Unsweetened)', 0, 0, 0, 0, 1, '100', 1),
+(391, 'Green Tea (Unsweetened)', 0, 0, 0, 0, 1, '100', 1),
+(392, 'Diet Soda', 0, 0, 0, 0, 0, '100', 1),
+(393, 'Whole Milk', 3.3, 4.7, 3.6, 0, 61, '100', 0),
+(394, 'Sour Cream (Full Fat)', 3.2, 3.6, 19, 0, 198, '100', 0),
+(395, 'Whipped Cream (Sweetened)', 2, 10, 20, 0, 230, '100', 0),
+(396, 'Chocolate Pudding (Instant, Prepared)', 3, 25, 5, 1, 160, '100', 0),
+(397, 'Corn Syrup', 0, 79, 0, 0, 316, '100', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `membership`
+--
+
+CREATE TABLE `membership` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `membership_type` varchar(100) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `customer_name` varchar(255) DEFAULT NULL,
+  `product_name` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `order_status` enum('delivered','cancelled','ongoing') DEFAULT NULL,
+  `total_price` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_name`, `product_name`, `price`, `quantity`, `address`, `order_date`, `order_status`, `total_price`) VALUES
+(1, 'andrea', 'shark shirt', 25.00, 1, 'monako james street apartment number 13', '2025-06-08 20:25:39', 'ongoing', 25.00),
+(2, 'andrea', 'sweatpants', 30.00, 1, 'monako james street apartment number 13', '2025-06-08 20:25:39', 'ongoing', 30.00),
+(3, 'mera', 'sports bra women', 45.00, 1, 'UK james street block c apartment 3', '2025-06-08 20:28:03', 'ongoing', 45.00),
+(4, 'mera', 'crop top women', 56.00, 1, 'UK james street block c apartment 3', '2025-06-08 20:28:03', 'ongoing', 56.00),
+(5, 'mera', 'double-layer shorts women', 55.00, 1, 'UK james street block c apartment 3', '2025-06-08 20:28:03', 'ongoing', 55.00),
+(6, 'mera', 'smart watch', 200.00, 1, 'UK james street block c apartment 3', '2025-06-08 20:28:03', 'ongoing', 200.00),
+(7, 'mera', 'water bottle', 20.00, 1, 'UK james street block c apartment 3', '2025-06-08 20:28:03', 'ongoing', 20.00),
+(8, 'hamed ezat', 'shirt', 20.00, 2, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 40.00),
+(9, 'hamed ezat', 'shark shirt', 25.00, 1, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 25.00),
+(10, 'hamed ezat', 'ryderwear shirt', 23.00, 1, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 23.00),
+(11, 'hamed ezat', 'stretch outfit', 50.00, 1, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 50.00),
+(12, 'hamed ezat', 'leg massager', 500.00, 1, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 500.00),
+(13, 'hamed ezat', 'smart watch', 200.00, 1, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 200.00),
+(14, 'hamed ezat', 'gun massager', 500.00, 1, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 500.00),
+(15, 'hamed ezat', 'powerlift belt', 200.00, 1, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 200.00),
+(16, 'hamed ezat', 'resistance band', 200.00, 1, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 200.00),
+(17, 'hamed ezat', 'water bottle', 20.00, 1, 'el gomhoreya street borg 1', '2025-06-09 15:18:40', 'ongoing', 20.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `private_coach`
+--
+
+CREATE TABLE `private_coach` (
+  `id` int(11) NOT NULL,
+  `coach_name` varchar(150) DEFAULT NULL,
+  `specialty` varchar(150) DEFAULT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `picture` varchar(255) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` int(11) DEFAULT 2,
+  `descr` varchar(255) DEFAULT NULL,
+  `time_start` time DEFAULT NULL,
+  `time_end` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `private_coach`
+--
+
+INSERT INTO `private_coach` (`id`, `coach_name`, `specialty`, `email`, `phone`, `picture`, `password`, `role`, `descr`, `time_start`, `time_end`) VALUES
+(1, 'John Doe', 'strength training and bodybuilding', 'J.doe@gmail.com', '2001064334130', 'uploads/AdobeStock_122694148_Preview.jpeg', '123456', 2, 'John is an expert in strength training and bodybuilding. He helps clients build muscle and improve their endurance.', '08:00:00', '16:00:00'),
+(2, 'James Smith', 'weight loss and cardiovascular health', 'james.smith12@gmail.com', '021216154', 'uploads/AdobeStock_266233217_Preview.jpeg', '1234556777', 2, 'James specializes in weight loss and cardiovascular health. She motivates her clients to achieve a healthier lifestyle.', '00:00:00', '12:00:00'),
+(3, 'Emily Taylor', 'Yoga and Flexibility', 'e.taylor60@gmail.com', '01260090541', 'uploads/AdobeStock_434255620_Preview.jpeg', 'cameroqueen13', 2, 'Emily is a yoga instructor who focuses on improving flexibility and mental clarity through mindful practice.', '12:30:00', '20:50:00'),
+(4, 'Mark Johnson', 'functional training and sports performance', 'mark_johnson20@gmail.com', '1050010541', 'uploads/AdobeStock_260048846_Preview.jpeg', 'mark123muscle', 2, 'Mark focuses on functional training and sports performance, helping athletes achieve peak physical fitness.', '08:00:00', '16:00:00'),
+(5, 'Laura Green', 'Pilates, Core Strengthening, Injury Rehabilitation, Posture Correction, Flexibility', 'laura.green15@gmail.com', '01170500696', 'upload/AdobeStock_125164212_Preview.jpeg', 'laraflex1234', 2, 'Laura specializes in Pilates, core strengthening, and rehabilitation. She focuses on improving flexibility and correcting posture.\r\n\r\n', '10:30:00', '20:30:00'),
+(6, 'Dina Lee', 'Functional Movement Training, CrossFit, Endurance Training, HIIT, Athletic Conditioning', 'dina.lee@gmail.com', '01087650050', 'upload/AdobeStock_113269120_Preview.jpeg', 'dokkiflexfire50', 2, 'Dina is a CrossFit expert with a focus on endurance training and athletic conditioning. He helps athletes reach their peak performance.', '11:30:00', '20:30:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `image` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `price`, `image`) VALUES
+(1, 'shirt', 20.00, 'img/WhatsApp Image 2025-06-08 at 7.11.18 PM (6).jpeg'),
+(2, 'shark shirt', 25.00, 'img/WhatsApp Image 2025-06-08 at 7.11.18 PM (7).jpeg'),
+(3, 'ryderwear shirt', 23.00, 'img/WhatsApp Image 2025-06-08 at 7.11.18 PM (3).jpeg'),
+(4, 'stretch outfit', 50.00, 'img/WhatsApp Image 2025-06-08 at 7.11.19 PM (1).jpeg'),
+(5, 'shark outfit women', 100.00, 'img/Womens_Split_image_2_1900x-2688848408.jpg'),
+(6, 'sports shirt women', 52.00, 'img/88c29a4748997fc37ccd0803439a8b6c-1648679396.jpg'),
+(7, 'crop top women', 56.00, 'img/Women-Gym-Shirts-Yoga-Crop-Top-Quick-dry-sports-Tank-tops-Running-Shirts-women-Short-Sleeve-2175221244.jpg'),
+(8, 'leggings women', 53.00, 'img/44f2a67990992613a1b82df9bdce364a-3439796632.jpg'),
+(9, 'sweatpants', 30.00, 'img/f2c9612d629216950cca0837f91a6d50-2941254195.jpg'),
+(10, 'double-layer shorts', 45.00, 'img/cn-11134207-7ras8-m2f8j4refb4kf4-2709398049.jpg'),
+(11, 'double-layer shorts women', 55.00, 'img/57a58aec-df79-49e8-a41a-6565094f547a.cd546b637499c7f2586166b3561f47e3-3434972625.jpeg'),
+(12, 'sports bra women', 45.00, 'img/Sexy-Women-Sports-Bras-Tank-Top-Athletic-Vest-Gym-Fitness-Sport-Bra-No-rims-Padded-Running-2045005292.jpg'),
+(13, 'smart watch', 200.00, 'img/sech-fusion-smart-watch-70457681-113b-4b76-8ee1-64d111f987f5-2831445404.jpg'),
+(14, 'leg massager', 500.00, 'img/de04e787-06cf-4bcc-af64-09aa03af96f3.c1c4160baa3de14499abd0964871083a-378293767.jpeg'),
+(15, 'gun massager', 500.00, 'img/5e113d61-c117-4cdd-98c4-5d026b744d9f_1.09f9e949af1f93eb1b5969bfe577f05c-431294881.jpeg'),
+(16, 'pull straps', 200.00, 'img/WhatsApp Image 2025-06-08 at 7.11.19 PM (2).jpeg'),
+(17, 'push staps', 200.00, 'img/WhatsApp Image 2025-06-08 at 7.11.18 PM (5).jpeg'),
+(18, 'resistance band', 200.00, 'img/41keEATyPjL._AC_SL1500_.jpg'),
+(19, 'powerlift belt', 200.00, 'img/daada62d-ba37-4e06-8028-c1f3516cf4bd.38e0146329a361a2cdb440d69c82fbf0-4262437070.jpeg'),
+(20, 'gym bag', 250.00, 'img/focusgear-501649805.jpg'),
+(21, 'fashion gym bag women', 350.00, 'img/88bceb50ef3a5c6ec816a194b9a18000-1402752103.jpg'),
+(22, 'water bottle', 20.00, 'img/d431bd6a-c523-4b64-9d31-07d6f56cda3f.40da70bd09c13716767fde143ce164d9-2099474834.jpeg'),
+(23, 'shaker', 25.00, 'img/blender-bottle-prostak-shaker-tomatodo-20-oz-500-ml-D_NQ_NP_842294-MPE32058171071_092019-F-4184103047.jpg'),
+(24, 'creatine', 500.00, 'img/download (3).jpeg'),
+(25, 'pre workout', 500.00, 'img/WhatsApp Image 2025-06-08 at 7.11.19 PM (3).jpeg'),
+(26, 'whey protein', 300.00, 'img/WhatsApp Image 2025-06-08 at 7.11.18 PM.jpeg'),
+(27, 'headphones', 350.00, 'img/headphone2.jpeg'),
+(28, 'air pods', 300.00, 'img/air pods.jpeg'),
+(29, 'mass gainer', 450.00, 'img/WhatsApp Image 2025-06-08 at 7.11.19 PM.jpeg'),
+(30, 'protein bar', 10.00, 'img/96134aa8-48ca-4620-a98e-5af40a811c49_1.19db8ef3dbe5a24a1339fed57be5e47a-2232110464.jpeg'),
+(31, 'adjustable dumbbells', 750.00, 'img/3588720464-3307457114.jpg'),
+(32, 'bar', 350.00, 'img/51Xkpfjqk6L._SL1000_-3669006239.jpg'),
+(33, 'weight plates', 500.00, 'img/bodymax_olympic_rubber_weight_dics_1600_1600-1189290570.jpg'),
+(34, 'yoga ball', 250.00, 'img/Exercise-Balls-for-Fitness-How-to-Pick-the-Right-Size-Stab-14699-2d244c46ac-1504803794-3339835152.jpg'),
+(35, 'yoga mat', 55.00, 'img/TOPLUS-Yoga-Mat-Classic-Pro-546062337.jpg'),
+(36, 'treadmill', 1500.00, 'img/61jTo5c6NTL._SL1500_-3386882847.jpg'),
+(37, 'exercise bike', 1250.00, 'img/6405080_sd-822124338.jpg'),
+(38, 'grip strengthener', 250.00, 'img/71s7FsXjUWL._AC_SL1500_-2085368297.jpg'),
+(39, 'gram scale', 570.00, 'img/balanza-digital-gram-hgs-3000-3kg01g-520x520-1884684931.jpeg'),
+(40, 'knee support', 320.00, 'img/NEENCA-Hinged-Knee-Brace-Adjustable-Knee-Immobilizer-with-Side-Stabilizers-of-Locking-Dials_e0c927a6-800e-40f0-91a2-f9464e7f1d2a.f6d0d67c532304a1a324e59c4f98e3f4-2664999417.jpeg'),
+(41, 'multivitamin', 140.00, 'img/WhatsApp Image 2025-06-08 at 7.11.19 PM (4).jpeg'),
+(42, 'omega-3', 160.00, 'img/Omega-3-maroc-3861159052.jpg'),
+(43, 'multivitamin women', 150.00, 'img/71yqkeKzHDL-2436261255.jpg'),
+(44, 'snacks', 25.00, 'img/FITNESS-CHOCOLATE-ORANGE-bar-3D-3740610438.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subscriptions`
+--
+
+CREATE TABLE `subscriptions` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `plan` varchar(50) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `remaining_days` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `subscriptions`
+--
+
+INSERT INTO `subscriptions` (`id`, `user_id`, `plan`, `start_date`, `end_date`, `remaining_days`) VALUES
+(31, 6, 'Pro', '2025-06-10', '2025-12-10', 183);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `gender` enum('Male','Female') NOT NULL,
+  `subscription` enum('Silver','Premium') NOT NULL DEFAULT 'Silver',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `role` int(11) DEFAULT 3
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `name`, `password`, `phone`, `gender`, `subscription`, `created_at`, `role`) VALUES
+(1, 'moh@ggrjkgfgfg.com', 'mohammed', '2277hhhk', '01064334130', 'Male', 'Silver', '2025-03-17 06:39:47', 3),
+(2, 'moh@ggrffvgfgfg.com', 'mohammed', '2277hhhk', '01064334130', 'Male', 'Silver', '2025-03-17 06:55:05', 3),
+(3, 'mohyhh@dgdrgg.com', 'ahmed gamal', 'Loki@Lokitht', '01064334130', 'Male', 'Premium', '2025-03-17 06:59:48', 3),
+(4, 'moh@gmail.com', 'mo', '123456', '2001064334130', 'Male', 'Silver', '2025-04-13 17:51:25', 3),
+(5, 'mena.afro@gmail.com', 'mena', '123456', '01050010541', 'Male', 'Silver', '2025-06-09 18:05:11', 3),
+(6, 'mikhail999@gmail.com', 'mikhail', '123456', '01050010541', 'Male', 'Premium', '2025-06-09 19:26:35', 3);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`),
+  ADD KEY `coach_id` (`coach_id`);
+
+--
+-- Indexes for table `membership`
+--
+ALTER TABLE `membership`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `private_coach`
+--
+ALTER TABLE `private_coach`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `membership`
+--
+ALTER TABLE `membership`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `private_coach`
+--
+ALTER TABLE `private_coach`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
+-- AUTO_INCREMENT for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`coach_id`) REFERENCES `private_coach` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

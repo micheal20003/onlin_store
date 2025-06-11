@@ -1,0 +1,24 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+import joblib
+
+# Load the dataset
+file_path = "bmi_bmr_dataset.csv"  # Ensure the correct filename
+df = pd.read_csv(file_path)
+
+# Selecting relevant features and target variable
+X = df[['Age', 'Height_cm', 'Weight_kg']]  # Features
+y = df[['BMR']]  # Target variable
+
+# Splitting the dataset
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train the regression model
+bmr_model = LinearRegression()
+bmr_model.fit(X_train, y_train)
+
+# Save the model
+joblib.dump(bmr_model, "bmr_model.pkl")
+
+print("BMR Model trained and saved successfully!")
